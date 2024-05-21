@@ -1,5 +1,13 @@
 <script setup>
 import AppLayout from '@/Layouts/AppLayout.vue';
+
+defineProps({
+    wilayah: {
+        type: Number,
+            default: () => [],
+    },
+})
+
 </script>
 
 <template>
@@ -13,10 +21,22 @@ import AppLayout from '@/Layouts/AppLayout.vue';
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
-                    <div class="p-2 bg-white shadow-md rounded-md"></div>
-                    <div class="p-2 bg-white shadow-md rounded-md"></div>
-                    <div class="p-2 bg-white shadow-md rounded-md"></div>
-                    <div class="p-2 bg-white shadow-md rounded-md"></div>
+                    <div class="p-4 bg-white shadow-md rounded-md">
+                        <h5 class="text-2xl font-bold">{{ wilayah }}</h5>
+                        <p class="text-gray-400">Jumlah Wilayah</p>
+                    </div>
+                    <div class="p-4 bg-white shadow-md rounded-md">
+                        <h5 class="text-2xl font-bold">{{ wilayah }}</h5>
+                        <p class="text-gray-400">Jumlah Wilayah Cluster 1</p>
+                    </div>
+                    <div class="p-4 bg-white shadow-md rounded-md">
+                        <h5 class="text-2xl font-bold">{{ wilayah }}</h5>
+                        <p class="text-gray-400">Jumlah Wilayah Cluster 2</p>
+                    </div>
+                    <div class="p-4 bg-white shadow-md rounded-md">
+                        <h5 class="text-2xl font-bold">{{ wilayah }}</h5>
+                        <p class="text-gray-400">Jumlah Wilayah Cluster 3</p>
+                    </div>
                 </div>
             </div>
         </div>

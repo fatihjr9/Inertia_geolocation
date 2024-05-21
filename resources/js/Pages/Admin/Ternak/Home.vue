@@ -13,6 +13,14 @@ const delTernak = (peternakan) => {
     form.delete(`/admin/peternakan/${peternakan}`);
 }
 
+const generateCluster = () => {
+    try {
+        form.post(`/admin/peternakan/klusterisasi`)
+    } catch(error) {
+        console.error(error)
+    }
+}
+
 </script>
 
 <template>
@@ -21,6 +29,7 @@ const delTernak = (peternakan) => {
             <div class="flex flex-row items-center justify-between">
                 <h2 class="font-semibold text-xl text-gray-800 leading-tight">Data Peternakan</h2>
                 <Link :href="route('ternak-create')">Tambah</Link>
+                <button @click="generateCluster()" class="p-2 rounded-lg bg-green-50 text-green-500">Generate</button>
             </div>
         </template>
         
@@ -73,9 +82,9 @@ const delTernak = (peternakan) => {
                                 {{ p.lahan }}
                             </td>
                             <td class="px-6 py-4">
-                                <div class="flex flex-row items-center gap-x-4">
-                                    <button>Edit</button>
-                                    <button @click="delTernak(p.id)">Delete</button>
+                                <div class="flex flex-row items-center gap-x-1">
+                                    <button class="p-2 rounded-lg bg-orange-50 text-orange-500">Edit</button>
+                                    <button @click="delTernak(p.id)" class="p-2 rounded-lg bg-red-50 text-red-500">Delete</button>
                                 </div>
                             </td>
                         </tr>

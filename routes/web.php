@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\KriteriaController;
 use App\Http\Controllers\TernakController;
 use App\Http\Controllers\WilayahController;
@@ -29,9 +30,7 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
-    Route::get('/dashboard', function () {
-        return Inertia::render('Dashboard');
-    })->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     // Wilayah
     Route::get('/admin/wilayah', [WilayahController::class, 'index'])->name('wilayah-index');
     Route::get('/admin/tambah-wilayah', [WilayahController::class, 'create'])->name('wilayah-create');
@@ -41,7 +40,9 @@ Route::middleware([
     Route::get('/admin/peternakan', [TernakController::class, 'index'])->name('ternak-index');
     Route::get('/admin/tambah-peternakan', [TernakController::class, 'create'])->name('ternak-create');
     Route::post('/admin/tambah-peternakan', [TernakController::class, 'store'])->name('ternak-store');
+    Route::post('/admin/peternakan/klusterisasi', [TernakController::class, 'clustering'])->name('ternak-cluster');
     Route::delete('/admin/peternakan/{peternakan}', [TernakController::class, 'destroy'])->name('ternak-destroy');
     // Kriteria
     Route::get('/admin/kriteria', [KriteriaController::class, 'index'])->name('kriteria-index');
+    Route::delete('/admin/kriteria/{kriteria}', [KriteriaController::class, 'destroy'])->name('kriteria-destroy');
 });

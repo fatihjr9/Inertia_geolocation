@@ -1,5 +1,17 @@
 <script setup>
 import AppLayout from '@/Layouts/AppLayout.vue';
+import { useForm } from '@inertiajs/vue3';
+
+defineProps({
+    data: {
+        type: Array,
+            default: () => [],
+    },
+})
+const form = useForm({});
+const delKriteria = (peternakan) => {
+    form.delete(`/admin/kriteria/${peternakan}`);
+}
 </script>
 
 <template>
@@ -36,26 +48,26 @@ import AppLayout from '@/Layouts/AppLayout.vue';
                         </tr>
                     </thead>
                     <tbody>
-                        <tr class="bg-white border-b">
+                        <tr v-for="(p, index) in data" :key="p.id" class="bg-white border-b">
                             <td class="px-6 py-4">
-                                1
+                                {{ index + 1 }}
                             </td>
                             <td class="px-6 py-4">
-                                Laptop
+                                {{ p.kelurahan }}
+                            </td>
+                            <td class="px-6 py-4"> 
+                                {{ p.c1 }}
                             </td>
                             <td class="px-6 py-4">
-                                $2999
+                                {{ p.c2 }}
                             </td>
                             <td class="px-6 py-4">
-                                $2999
-                            </td>
-                            <td class="px-6 py-4">
-                                $2999
+                                {{ p.c3 }}
                             </td>
                             <td class="px-6 py-4">
                                 <div class="flex flex-row items-center gap-x-4">
                                     <button>Edit</button>
-                                    <button>Delete</button>
+                                    <button @click="delKriteria(p.id)">Delete</button>
                                 </div>
                             </td>
                         </tr>
