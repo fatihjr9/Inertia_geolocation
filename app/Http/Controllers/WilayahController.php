@@ -23,6 +23,7 @@ class WilayahController extends Controller
     public function store(Request $request) {
         $data = $request->validate([
             'longitude' => 'required',
+            'latitude' => 'required',
             'kelurahan' => 'required'
         ]);
 

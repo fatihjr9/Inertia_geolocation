@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ClientController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\KriteriaController;
 use App\Http\Controllers\TernakController;
@@ -19,11 +20,7 @@ use Inertia\Inertia;
 |
 */
 
-Route::get('/', function () {
-    return Inertia::render('Home', [
-        'canLogin' => Route::has('login'),
-    ]);
-});
+Route::get('/', [ClientController::class, 'index']);
 
 Route::middleware([
     'auth:sanctum',
@@ -36,12 +33,19 @@ Route::middleware([
     Route::get('/admin/tambah-wilayah', [WilayahController::class, 'create'])->name('wilayah-create');
     Route::post('/admin/tambah-wilayah', [WilayahController::class, 'store'])->name('wilayah-store');
     Route::delete('/admin/wilayah/{wilayah}', [WilayahController::class, 'destroy'])->name('wilayah-destroy');
+
     // Ternak
     Route::get('/admin/peternakan', [TernakController::class, 'index'])->name('ternak-index');
+        // Create
     Route::get('/admin/tambah-peternakan', [TernakController::class, 'create'])->name('ternak-create');
     Route::post('/admin/tambah-peternakan', [TernakController::class, 'store'])->name('ternak-store');
-    Route::post('/admin/peternakan/klusterisasi', [TernakController::class, 'clustering'])->name('ternak-cluster');
+        // Edit
+    Route::get('/admin/edit-peternakan/{id}', [TernakController::class, 'edit'])->name('ternak-edit');
+    Route::put('/admin/edit-peternakan/{id}', [TernakController::class, 'update'])->name('ternak-update');
+        // Others 
+    Route::post('/admin/peternakan/klusterisasi/{id}', [TernakController::class, 'clustering'])->name('ternak-cluster');
     Route::delete('/admin/peternakan/{peternakan}', [TernakController::class, 'destroy'])->name('ternak-destroy');
+
     // Kriteria
     Route::get('/admin/kriteria', [KriteriaController::class, 'index'])->name('kriteria-index');
     Route::delete('/admin/kriteria/{kriteria}', [KriteriaController::class, 'destroy'])->name('kriteria-destroy');

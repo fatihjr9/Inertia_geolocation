@@ -66,8 +66,7 @@ const delKriteria = (peternakan) => {
                             </td>
                             <td class="px-6 py-4">
                                 <div class="flex flex-row items-center gap-x-4">
-                                    <button>Edit</button>
-                                    <button @click="delKriteria(p.id)">Delete</button>
+                                    <button @click="delKriteria(p.id)" class="p-2 rounded-lg bg-red-50 text-red-500">Delete</button>
                                 </div>
                             </td>
                         </tr>

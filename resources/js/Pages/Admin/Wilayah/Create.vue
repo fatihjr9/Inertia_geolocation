@@ -3,6 +3,7 @@ import AppLayout from '@/Layouts/AppLayout.vue';
 import { Link, useForm } from '@inertiajs/vue3';
 
 const form = useForm({
+    latitude:"",
     longitude:"",
     kelurahan:"",
 })
@@ -24,6 +25,10 @@ const submit = () => {
         
         <div class="w-96 mx-auto sm:px-6 lg:px-8 mt-6">
             <form @submit.prevent="submit" class="p-4 bg-white rounded-lg shadow-md space-y-2">
+                <div class="flex flex-col space-y-1">
+                    <p>Latitude</p>
+                    <input type="text" v-model="form.latitude" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                </div>
                 <div class="flex flex-col space-y-1">
                     <p>Longitude</p>
                     <input type="text" v-model="form.longitude" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">

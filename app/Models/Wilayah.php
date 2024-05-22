@@ -8,5 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class Wilayah extends Model
 {
     use HasFactory;
-    protected $fillable = ['longitude','kelurahan'];
+    protected $fillable = ['latitude','longitude','kelurahan'];
 }

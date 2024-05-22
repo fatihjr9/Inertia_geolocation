@@ -21,7 +21,7 @@ const delWilayah = (wilayah) => {
         <template #header>
             <div class="flex flex-row items-center justify-between">
                 <h2 class="font-semibold text-xl text-gray-800 leading-tight">Data Wilayah</h2>
-                <Link :href="route('wilayah-create')">Tambah</Link>
+                <Link :href="route('wilayah-create')" class="p-2 rounded-lg border border-slate-200 bg-slate-50 text-gray-500">+ Tambah Data</Link>
             </div>
         </template>
         
@@ -32,6 +32,9 @@ const delWilayah = (wilayah) => {
                         <tr>
                             <th scope="col" class="px-6 py-3">
                                 No
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                Latitude
                             </th>
                             <th scope="col" class="px-6 py-3">
                                 Longitude
@@ -45,9 +48,12 @@ const delWilayah = (wilayah) => {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="p in data" ::key="p.id" class="bg-white border-b">
+                        <tr v-for="(p, index) in data" ::key="p.id" class="bg-white border-b">
                             <td class="px-6 py-4">
-                                1
+                                {{ index+1 }}
+                            </td>
+                            <td class="px-6 py-4">
+                                {{ p.latitude }}
                             </td>
                             <td class="px-6 py-4">
                                 {{ p.longitude }}
@@ -56,9 +62,9 @@ const delWilayah = (wilayah) => {
                                 {{ p.kelurahan }}
                             </td>
                             <td class="px-6 py-4">
-                                <div class="flex flex-row items-center gap-x-4">
-                                    <button>Edit</button>
-                                    <button @click="delWilayah(p.id)">Delete</button>
+                                <div class="flex flex-row items-center gap-x-2">
+                                    <button class="p-2 rounded-lg bg-orange-50 text-orange-500">Edit</button>
+                                    <button @click="delWilayah(p.id)" class="p-2 rounded-lg bg-red-50 text-red-500">Delete</button>
                                 </div>
                             </td>
                         </tr>

@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('wilayahs', function (Blueprint $table) {
             $table->id();
+            $table->string('latitude');
             $table->string('longitude');
             $table->string('kelurahan');
             $table->timestamps();

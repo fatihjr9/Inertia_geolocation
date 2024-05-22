@@ -4,7 +4,7 @@ import { Link, useForm } from '@inertiajs/vue3';
 defineProps({
     data: {
         type: Array,
-            default: () => [],
+        default: () => [],
     },
 })
 
@@ -13,9 +13,9 @@ const delTernak = (peternakan) => {
     form.delete(`/admin/peternakan/${peternakan}`);
 }
 
-const generateCluster = () => {
+const generateCluster = (id) => {
     try {
-        form.post(`/admin/peternakan/klusterisasi`)
+        form.post(`/admin/peternakan/klusterisasi/${id}`)
     } catch(error) {
         console.error(error)
     }
@@ -28,8 +28,7 @@ const generateCluster = () => {
         <template #header>
             <div class="flex flex-row items-center justify-between">
                 <h2 class="font-semibold text-xl text-gray-800 leading-tight">Data Peternakan</h2>
-                <Link :href="route('ternak-create')">Tambah</Link>
-                <button @click="generateCluster()" class="p-2 rounded-lg bg-green-50 text-green-500">Generate</button>
+                <Link :href="route('ternak-create')" class="p-2 rounded-lg border border-slate-200 bg-slate-50 text-gray-500">+ Tambah Data</Link>
             </div>
         </template>
         
@@ -83,7 +82,8 @@ const generateCluster = () => {
                             </td>
                             <td class="px-6 py-4">
                                 <div class="flex flex-row items-center gap-x-1">
-                                    <button class="p-2 rounded-lg bg-orange-50 text-orange-500">Edit</button>
+                                    <button @click="generateCluster(p.id)" class="p-2 rounded-lg bg-green-50 text-green-500">Generate Data</button>
+                                    <Link :href="route('ternak-edit',p.id)" class="p-2 rounded-lg bg-orange-50 text-orange-500">Edit</Link>
                                     <button @click="delTernak(p.id)" class="p-2 rounded-lg bg-red-50 text-red-500">Delete</button>
                                 </div>
                             </td>
