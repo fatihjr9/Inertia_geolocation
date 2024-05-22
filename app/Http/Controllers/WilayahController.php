@@ -31,6 +31,22 @@ class WilayahController extends Controller
         return Inertia::location(route('wilayah-index'));
     }
 
+    public function edit($id) {
+        $wilayah = Wilayah::findOrFail($id);
+        return Inertia::render('Admin/Wilayah/Edit', ['wilayah'=> $wilayah]);
+    }    
+
+    public function update(Request $request, $id) {
+        $wilayah = Wilayah::findOrFail($id);
+        $data = $request->validate([
+            'longitude' => 'required',
+            'latitude' => 'required',
+        ]);
+    
+        $wilayah->update($data);
+        return Inertia::location(route('wilayah-index'));
+    }
+
     public function destroy($id) {
         $wilayah = Wilayah::findOrFail($id);
         $wilayah->delete();

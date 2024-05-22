@@ -63,7 +63,7 @@ const delWilayah = (wilayah) => {
                             </td>
                             <td class="px-6 py-4">
                                 <div class="flex flex-row items-center gap-x-2">
-                                    <button class="p-2 rounded-lg bg-orange-50 text-orange-500">Edit</button>
+                                    <Link :href="route('wilayah-edit',p.id)" class="p-2 rounded-lg bg-orange-50 text-orange-500">Edit</Link>
                                     <button @click="delWilayah(p.id)" class="p-2 rounded-lg bg-red-50 text-red-500">Delete</button>
                                 </div>
                             </td>

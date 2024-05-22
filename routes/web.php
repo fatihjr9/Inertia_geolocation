@@ -28,10 +28,16 @@ Route::middleware([
     'verified',
 ])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
     // Wilayah
     Route::get('/admin/wilayah', [WilayahController::class, 'index'])->name('wilayah-index');
+        // Create
     Route::get('/admin/tambah-wilayah', [WilayahController::class, 'create'])->name('wilayah-create');
     Route::post('/admin/tambah-wilayah', [WilayahController::class, 'store'])->name('wilayah-store');
+        // Edit
+    Route::get('/admin/edit-wilayah/{id}', [WilayahController::class, 'edit'])->name('wilayah-edit');
+    Route::put('/admin/edit-wilayah/{id}', [WilayahController::class, 'update'])->name('wilayah-update');
+        // Others
     Route::delete('/admin/wilayah/{wilayah}', [WilayahController::class, 'destroy'])->name('wilayah-destroy');
 
     // Ternak
