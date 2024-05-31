@@ -16,6 +16,9 @@ const delTernak = (peternakan) => {
 const generateCluster = (id) => {
     try {
         form.post(`/admin/peternakan/klusterisasi/${id}`)
+        if(200) {
+            window.alert('Clustering berhasil dilakukan');
+        }
     } catch(error) {
         console.error(error)
     }

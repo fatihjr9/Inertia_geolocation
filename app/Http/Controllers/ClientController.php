@@ -9,7 +9,7 @@ use Inertia\Inertia;
 class ClientController extends Controller
 {
     public function index() {
-        $data = Wilayah::orderBy('longitude')->get()->toArray();
+        $data = Wilayah::all();
         return Inertia::render('Home',[
             'data' => $data,
             'canLogin' => Route::has('login'), // pastikan canLogin disediakan
