@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Kriteria;
 use App\Models\Wilayah;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -13,6 +14,16 @@ class ClientController extends Controller
         return Inertia::render('Home',[
             'data' => $data,
             'canLogin' => Route::has('login'), // pastikan canLogin disediakan
+        ]);    
+    }
+    
+
+    public function getKriteria($kelurahan) {
+        $wilayah = Wilayah::where('kelurahan', $kelurahan)->first();
+        $kriteria = Kriteria::where('kelurahan', $kelurahan)->get();
+        return response()->json([
+            'wilayah' => $wilayah,
+            'kriteria' => $kriteria
         ]);    
     }
 }

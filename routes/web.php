@@ -3,11 +3,13 @@
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\KriteriaController;
+use App\Http\Controllers\TemplateController;
 use App\Http\Controllers\TernakController;
 use App\Http\Controllers\WilayahController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use SebastianBergmann\Template\Template;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,6 +23,8 @@ use Inertia\Inertia;
 */
 
 Route::get('/', [ClientController::class, 'index']);
+Route::get('/api/kriteria/{kelurahan}', [ClientController::class, 'getKriteria']);
+Route::get('/template', [TemplateController::class, 'index']);
 
 Route::middleware([
     'auth:sanctum',
