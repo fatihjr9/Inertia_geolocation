@@ -11,7 +11,7 @@ defineProps({
 
 <template>
     <ClientLayout>
-        <div class="rounded-xl ring-1 ring-slate-200 shadow-md hover:shadow-lg hover:duration-300 hover:transition-all">  
+        <div class="rounded-xl ring-1 ring-slate-200 shadow-md hover:shadow-lg hover:duration-300 hover:transition-all mb-8">  
             <Map :wilayah="data"/>
         </div>
     </ClientLayout>

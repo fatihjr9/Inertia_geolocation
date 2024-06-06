@@ -23,6 +23,7 @@ use SebastianBergmann\Template\Template;
 */
 
 Route::get('/', [ClientController::class, 'index']);
+Route::get('/api/kriteria', [ClientController::class, 'setKriteria']);
 Route::get('/api/kriteria/{kelurahan}', [ClientController::class, 'getKriteria']);
 Route::get('/template', [TemplateController::class, 'index']);
 

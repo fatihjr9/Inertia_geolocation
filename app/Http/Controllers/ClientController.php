@@ -17,6 +17,14 @@ class ClientController extends Controller
         ]);    
     }
     
+    public function setKriteria() {
+        $wilayah = Wilayah::all();
+        $kriteria = Kriteria::all();
+        return response()->json([
+            'wilayah' => $wilayah,
+            'kriteria' => $kriteria
+        ]);    
+    }
 
     public function getKriteria($kelurahan) {
         $wilayah = Wilayah::where('kelurahan', $kelurahan)->first();

@@ -11,43 +11,96 @@ import html2canvas from 'html2canvas';
 import axios from 'axios';
 
 export default {
-  props: {
-    wilayah: {
-      type: Array,
-      required: true
-    }
+  data() {
+    return {
+      locations: [],
+      criteria: []
+    };
   },
   mounted() {
-    this.initMap();
-    window.vueInstance = this; // Store Vue instance globally
+    this.loadData();
   },
   methods: {
-    initMap() {
-      const map = L.map('map').setView([-7.51729100, 110.59344100], 13);
+    async loadData() {
+      try {
+        const response = await axios.get('/api/kriteria');
+        this.locations = response.data.wilayah;
+        this.criteria = response.data.kriteria;
+        this.findMostFrequentCluster();
+        this.initMap();
+      } catch (error) {
+        console.error('Error loading data', error);
+      }
+    },
+    findMostFrequentCluster() {
+      this.locations.forEach((location) => {
+        const matchingCriteria = this.criteria.find(criteria => criteria.kelurahan === location.kelurahan);
 
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-      }).addTo(map);
+        if (matchingCriteria) {
+          const clusters = ['c1', 'c2', 'c3'];
+          let maxCluster = '';
+          let maxCount = 0;
 
-      this.wilayah.forEach((location) => {
-        const popupContent = document.createElement('div');
-        const kelurahanText = document.createElement('p');
-        kelurahanText.textContent = location.kelurahan;
+          clusters.forEach(cluster => {
+            if (matchingCriteria[cluster] > maxCount) {
+              maxCluster = cluster;
+              maxCount = matchingCriteria[cluster];
+            }
+          });
 
-        const downloadButton = document.createElement('button');
-        downloadButton.textContent = 'Download PDF';
-        downloadButton.className = 'bg-emerald-500 text-white p-2 rounded-lg w-full';
-        downloadButton.addEventListener('click', () => {
-          this.downloadPDF(location.kelurahan, map);
-        });
-
-        popupContent.appendChild(kelurahanText);
-        popupContent.appendChild(downloadButton);
-
-        L.marker([location.latitude, location.longitude])
-          .bindPopup(popupContent)
-          .addTo(map);
+          location.mostFrequentCluster = maxCluster;
+        } else {
+          location.mostFrequentCluster = 'Tidak Ada Data';
+        }
       });
+    },
+    initMap() {
+  const map = L.map('map').setView([-7.51729100, 110.59344100], 13);
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+  }).addTo(map);
+
+  const clusters = ['c1', 'c2', 'c3'];
+
+  clusters.forEach(cluster => {
+    const clusterLocations = this.locations.filter(location => location.mostFrequentCluster === cluster);
+
+    if (clusterLocations.length > 1) {
+      const clusterCoordinates = clusterLocations.map(location => [location.latitude, location.longitude]);
+      const color = this.getClusterColor(cluster);
+      
+      L.polyline(clusterCoordinates, { color, opacity: 0.5 }).addTo(map);
+    }
+  });
+
+  this.locations.forEach((location) => {
+    const popupContent = document.createElement('div');
+    const kelurahanText = document.createElement('p');
+    kelurahanText.textContent = location.kelurahan;
+
+    const downloadButton = document.createElement('button');
+    downloadButton.textContent = 'Download PDF';
+    downloadButton.className = 'bg-emerald-500 text-white p-2 rounded-lg w-full';
+    downloadButton.addEventListener('click', () => {
+      this.downloadPDF(location.kelurahan, map);
+    });
+
+    popupContent.appendChild(kelurahanText);
+    popupContent.appendChild(downloadButton);
+
+    L.marker([location.latitude, location.longitude])
+      .bindPopup(popupContent)
+      .addTo(map);
+  });
+},
+    getClusterColor(cluster) {
+      const clusterColors = {
+        'c1': 'red',
+        'c2': 'green',
+        'c3': 'blue'
+      };
+      return clusterColors[cluster];
     },
     async downloadPDF(kelurahan, map) {
       try {
